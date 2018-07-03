@@ -43,7 +43,7 @@ public class SettingsDialogController {
         choSourceDisplay.setItems(FXCollections.observableArrayList("None", "Waypoints only", "Waypoints + Source"));
         choSourceDisplay.getSelectionModel().select(Integer.parseInt(properties.getProperty("ui.sourceDisplay", "2")));
         
-        choCSVType.setItems(FXCollections.observableArrayList("Jaci", "Talon SRX"));
+        choCSVType.setItems(FXCollections.observableArrayList("Jaci", "Talon SRX", "Talon SRX Remote"));
         choCSVType.getSelectionModel().select(Integer.parseInt(properties.getProperty("ui.csvType", "0")));
 
         chkAddWaypointOnClick.setSelected(Boolean.parseBoolean(properties.getProperty("ui.addWaypointOnClick", "false")));

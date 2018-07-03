@@ -467,11 +467,13 @@ public class MainUIController
             int csvType = Integer.parseInt(csvTypeStr);
             
             try {
-            	if(csvType == 0) {
-            		backend.exportTrajectoriesJaci(new File(parentPath), ext);
-            	}
-            	else {
-            		backend.exportTrajectoriesTalon(new File(parentPath), ext);
+            	switch(csvType) {
+            		case 0:	backend.exportTrajectoriesJaci(new File(parentPath), ext);
+				break;
+			case 1: backend.exportTrajectoriesTalon(new File(parentPath), ext);
+				break;
+			case 2: backend.exportTrajectoriesTalonPigeon(new File(parentPath), ext);
+				break;
             	}
             } catch (Pathfinder.GenerationException e) {
                 Alert alert = AlertFactory.createExceptionAlert(e, "Invalid Trajectory!");

@@ -359,7 +359,94 @@ public class ProfileGenerator
                 throw new IllegalArgumentException("Invalid file extension");
         }
     }
-    
+    public void exportTrajectoriesTalonPigeon(File parentPath, String ext) throws Pathfinder.GenerationException, IOException {
+        updateTrajectories();
+
+        File dir = parentPath.getParentFile();
+
+        if (dir != null && !dir.exists() && dir.isDirectory()) {
+            if (!dir.mkdirs())
+                return;
+        }
+        switch (ext) {
+            case ".csv":
+                if (driveBase == DriveBase.SWERVE) {
+                	File flFile = new File(parentPath + "_fl_Talon.csv");
+			File frFile = new File(parentPath + "_fr_Talon.csv");
+			File blFile = new File(parentPath + "_bl_Talon.csv");
+			File brFile = new File(parentPath + "_br_Talon.csv");
+			FileWriter flfw = new FileWriter( flFile );
+			FileWriter frfw = new FileWriter( frFile );
+			FileWriter blfw = new FileWriter( blFile );
+			FileWriter brfw = new FileWriter( brFile );
+			PrintWriter flpw = new PrintWriter( flfw );
+			PrintWriter frpw = new PrintWriter( frfw );
+			PrintWriter blpw = new PrintWriter( blfw );
+			PrintWriter brpw = new PrintWriter( brfw );
+                	// CSV with position and velocity. To be used with Talon SRX Motion
+		    	// save front left path to CSV
+			for (int i = 0; i < fl.length(); i++) 
+			{			
+				Segment seg = fl.get(i);
+				flpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			}
+			    			
+			// save front right path to CSV
+			for (int i = 0; i < fr.length(); i++) 
+			{			
+				Segment seg = fr.get(i);
+				frpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			}
+			    	
+			// save back left path to CSV
+			for (int i = 0; i < bl.length(); i++) 
+			{			
+				Segment seg = bl.get(i);
+				blpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			}
+					
+			// save back right path to CSV
+			for (int i = 0; i < br.length(); i++) 
+			{			
+				Segment seg = br.get(i);
+				brpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			}
+			flpw.close();
+			frpw.close();
+			blpw.close();
+			brpw.close();
+                } else {
+                	File file = new File(parentPath + ".csv");
+			FileWriter fw = new FileWriter( file );
+			PrintWriter pw = new PrintWriter( fw );
+                	// CSV with position and velocity. To be used with Talon SRX Motion
+			// save path to CSV
+			for (int i = 0; i < source.length(); i++){ 
+		    		Segment seg = source.get(i);
+		    		pw.printf("%f\t%f\t%f\t%d\n", seg.position, seg.velocity, Mathf.radToDegrees(seg.heading), (int)(seg.dt * 1000));
+		    	}
+			pw.close();
+			    			
+                }
+            break;
+            case ".traj":
+                Pathfinder.writeToFile(new File(parentPath + "_source_detailed.traj"), source);
+
+                if (driveBase == DriveBase.SWERVE) {
+                    Pathfinder.writeToFile(new File(parentPath + "_fl_detailed.traj"), fl);
+                    Pathfinder.writeToFile(new File(parentPath + "_fr_detailed.traj"), fr);
+                    Pathfinder.writeToFile(new File(parentPath + "_bl_detailed.traj"), bl);
+                    Pathfinder.writeToFile(new File(parentPath + "_br_detailed.traj"), br);
+                } else {
+                    Pathfinder.writeToFile(new File(parentPath + "_left_detailed.traj"), fl);
+                    Pathfinder.writeToFile(new File(parentPath + "_right_detailed.traj"), fr);
+                }
+            break;
+            default:
+                throw new IllegalArgumentException("Invalid file extension");
+        }
+    }
+ 
     /**
      * Saves the project in XML format.
      *

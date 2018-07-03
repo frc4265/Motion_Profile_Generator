@@ -48,4 +48,9 @@ public class Mathf
     {
     	return feet * 12;
     }
+    public static double radToDegrees( double rad )
+    {
+	double deg = rad/(Math.PI * 2) * 360;
+	return deg <= 180 ? deg : deg - 360;
+    }
 }
