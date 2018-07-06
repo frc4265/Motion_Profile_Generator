@@ -75,6 +75,8 @@ public class ProfileGenerator
     private double wheelBaseW;
     private double wheelBaseD;
     
+    private boolean reverse;
+
     private DriveBase driveBase;
     private FitMethod fitMethod;
     private Units units;
@@ -210,6 +212,8 @@ public class ProfileGenerator
     	velocity = Mathf.round( velocity, 4 );
     	acceleration = Mathf.round( acceleration, 4 );
     	jerk = Mathf.round( jerk, 4 );
+
+	reverse = false;
     }
     
     /**
@@ -290,28 +294,28 @@ public class ProfileGenerator
 			    	for (int i = 0; i < fl.length(); i++) 
 			    	{			
 			    		Segment seg = fl.get(i);
-			    		flpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			    		flpw.printf("%f, %f, %d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), (int)(seg.dt * 1000));
 			    	}
 			    			
 			    	// save front right path to CSV
 			    	for (int i = 0; i < fr.length(); i++) 
 			    	{			
 			    		Segment seg = fr.get(i);
-			    		frpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			    		frpw.printf("%f, %f, %d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), (int)(seg.dt * 1000));
 			    	}
 			    	
 			    	// save back left path to CSV
 			    	for (int i = 0; i < bl.length(); i++) 
 			    	{			
 			    		Segment seg = bl.get(i);
-			    		blpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			    		blpw.printf("%f, %f, %d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), (int)(seg.dt * 1000));
 			    	}
 			    			
 			    	// save back right path to CSV
 			    	for (int i = 0; i < br.length(); i++) 
 			    	{			
 			    		Segment seg = br.get(i);
-			    		brpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			    		brpw.printf("%f, %f, %d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), (int)(seg.dt * 1000));
 			    	}
 			    	flpw.close();
 			    	frpw.close();
@@ -329,14 +333,14 @@ public class ProfileGenerator
 			    	for (int i = 0; i < fl.length(); i++) 
 			    	{			
 			    		Segment seg = fl.get(i);
-			    		lpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			    		lpw.printf("%f, %f, %d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), (int)(seg.dt * 1000));
 			    	}
 			    			
 			    	// save right path to CSV
 			    	for (int i = 0; i < fr.length(); i++) 
 			    	{			
 			    		Segment seg = fr.get(i);
-			    		rpw.printf("%f, %f, %d\n", seg.position, seg.velocity, (int)(seg.dt * 1000));
+			    		rpw.printf("%f, %f, %d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), (int)(seg.dt * 1000));
 			    	}
 			    	lpw.close();
 			    	rpw.close();
@@ -423,7 +427,7 @@ public class ProfileGenerator
 			// save path to CSV
 			for (int i = 0; i < source.length(); i++){ 
 		    		Segment seg = source.get(i);
-		    		pw.printf("%f\t%f\t%f\t%d\n", seg.position, seg.velocity, Mathf.radToDegrees(seg.heading), (int)(seg.dt * 1000));
+		    		pw.printf("%f\t%f\t%f\t%d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), Mathf.radToDegrees(seg.heading), (int)(seg.dt * 1000));
 		    	}
 			pw.close();
 			    			
@@ -776,6 +780,14 @@ public class ProfileGenerator
     public void setTimeStep(double timeStep)
     {
         this.timeStep = timeStep;
+    }
+    public boolean getReverse()
+    {
+	return this.reverse;
+    }
+    public void setReverse(boolean r)
+    {
+	this.reverse = r;
     }
 
     public double getVelocity() 

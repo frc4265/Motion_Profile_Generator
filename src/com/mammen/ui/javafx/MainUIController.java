@@ -38,6 +38,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
@@ -68,6 +69,10 @@ public class MainUIController
     @FXML
     private Label
         lblWheelBaseD;
+
+    @FXML
+    private CheckBox
+    	reverse;
 
     @FXML
     private TableView<Waypoint> tblWaypoints;
@@ -796,6 +801,7 @@ public class MainUIController
         backend.setJerk(Double.parseDouble( txtJerk.getText().trim() ));
         backend.setWheelBaseW(Double.parseDouble( txtWheelBaseW.getText().trim() ));
         backend.setWheelBaseD(Double.parseDouble( txtWheelBaseD.getText().trim() ));
+	backend.setReverse(reverse.isSelected());
     }
 
     /**
@@ -808,6 +814,8 @@ public class MainUIController
         txtJerk.setText("" + backend.getJerk());
         txtWheelBaseW.setText("" + backend.getWheelBaseW());
         txtWheelBaseD.setText("" + backend.getWheelBaseD());
+
+	reverse.setSelected(backend.getReverse());
 
         choDriveBase.setValue(choDriveBase.getItems().get(backend.getDriveBase().ordinal()));
         choFitMethod.setValue(choFitMethod.getItems().get(backend.getFitMethod().ordinal()));

@@ -13,6 +13,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
@@ -124,6 +125,10 @@
                                     <Tooltip text="The distance between your front and back wheels (Swerve modifier only)" textAlignment="CENTER" wrapText="true" />
                                  </tooltip>
                               </TextField>
+
+                              <Label alignment="CENTER_RIGHT" layoutX="186.0" layoutY="100" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="72.0" text="Reverse:" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+			      <CheckBox fx:id="reverse" maxHeight="-Infinity" maxWidth="1.79769E308" prefWidth="30" GridPane.columnIndex="3" GridPane.rowIndex="1">
+			      </CheckBox>
                               <Label alignment="CENTER_RIGHT" layoutX="186.0" layoutY="172.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="72.0" text="Drive Base:" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                               <Label alignment="CENTER_RIGHT" layoutX="186.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="39.0" prefWidth="72.0" text="Fit Method:" textAlignment="RIGHT" wrapText="true" GridPane.columnIndex="2" />
                               <ChoiceBox fx:id="choDriveBase" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefWidth="150.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
