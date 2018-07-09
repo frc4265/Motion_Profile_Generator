@@ -425,9 +425,15 @@ public class ProfileGenerator
 			PrintWriter pw = new PrintWriter( fw );
                 	// CSV with position and velocity. To be used with Talon SRX Motion
 			// save path to CSV
+
+			double heading = 0.0;
+
 			for (int i = 0; i < source.length(); i++){ 
 		    		Segment seg = source.get(i);
-		    		pw.printf("%f\t%f\t%f\t%d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), Mathf.radToDegrees(seg.heading), (int)(seg.dt * 1000));
+				if(i > 0){
+					heading += Mathf.radToDegrees(source.get(i).heading - source.get(i-1).heading);
+				}
+		    		pw.printf("%f\t%f\t%f\t%d\n", seg.position*(reverse?-1:1), seg.velocity*(reverse?-1:1), heading, (int)(seg.dt * 1000));
 		    	}
 			pw.close();
 			    			
